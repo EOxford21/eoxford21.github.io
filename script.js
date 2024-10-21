@@ -1,9 +1,24 @@
 function filterData() {
   event.preventDefault();
-  var startdate = document.getElementById("startdate").value;
-  var enddate = document.getElementById("enddate").value;
-  console.log(startdate);
-  console.log(enddate);
+
+  var startdate = new Date(document.getElementById("startdate").value);
+  var enddate = new Date(document.getElementById("enddate").value);
+  
+  // Get all rows from the table body
+  const rows = document.querySelectorAll("#pitchTable tbody tr");
+
+  rows.forEach(row => {
+    // Get the date from the second cell in the row (assuming the format is YYYY-MM-DD)
+    const dateCell = row.cells[1].textContent;
+    const rowDate = new Date(dateCell);
+
+    // Check if the row date is within the range
+    if (rowDate >= startdate && rowDate <= enddate) {
+      row.style.display = ""; // Show the row
+    } else {
+      row.style.display = "none"; // Hide the row
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
